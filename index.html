@@ -283,8 +283,13 @@
 
 <script type="module" src="app.js"></script>
 <script>
-  // Load homepage content
-  document.addEventListener('DOMContentLoaded', loadHomepageContent);
+  // Load homepage content once the module (app.js) has registered it on window.
+  // Using a defensive check so a module load failure never throws here.
+  window.addEventListener('load', function () {
+    if (typeof window.loadHomepageContent === 'function') {
+      window.loadHomepageContent();
+    }
+  });
 </script>
 
 </body>

@@ -31,6 +31,15 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const analytics = getAnalytics(app);
+
+// Analytics is optional and requires a measurementId. It can throw in some
+// environments (or with an incomplete config), so we guard it to make sure a
+// failure here never crashes the whole site / freezes the loading skeletons.
+let analytics = null;
+try {
+  analytics = getAnalytics(app);
+} catch (error) {
+  console.warn('Firebase Analytics not initialized:', error?.message || error);
+}
 
 export { db, analytics, cloudinaryConfig, firebaseConfig };

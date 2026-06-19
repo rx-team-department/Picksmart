@@ -595,6 +595,14 @@ section {
   border-radius: 8px;
 }
 
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-gray);
+  font-size: 1rem;
+}
+
 /* ========================================
    FORMS
    ======================================== */
