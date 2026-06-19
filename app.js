@@ -53,11 +53,19 @@ function setupLanguageToggle() {
 }
 
 function setupCursorGlow() {
+  // Only enable the custom cursor glow on devices with a precise pointer (desktop).
+  // On touch devices (phones/tablets) there is no mousemove, so the glow would
+  // otherwise stay stuck as a small circle in the corner of the screen.
+  const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+  if (!hasFinePointer) return;
+
   const cursorGlow = document.createElement('div');
-  cursorGlow.className = 'cursor-glow active';
+  // Start hidden — only reveal once the mouse actually moves.
+  cursorGlow.className = 'cursor-glow';
   document.body.appendChild(cursorGlow);
 
   document.addEventListener('mousemove', (e) => {
+    cursorGlow.classList.add('active');
     cursorGlow.style.left = (e.clientX - 20) + 'px';
     cursorGlow.style.top = (e.clientY - 20) + 'px';
   });
@@ -157,6 +165,18 @@ function loadPageContent() {
 // HOMEPAGE FUNCTIONS
 // ========================================
 
+// Renders an array of items into a section, replacing skeleton loaders.
+// Always clears the loaders — even when the data is empty or an error occurs —
+// so sections never stay stuck on spinning skeletons.
+function renderSection(section, items, renderItem, emptyMessage) {
+  if (!section) return;
+  if (items && items.length > 0) {
+    section.innerHTML = items.map(renderItem).join('');
+  } else {
+    section.innerHTML = `<p class="empty-state">${emptyMessage}</p>`;
+  }
+}
+
 async function loadHomepageContent() {
   const featuredSection = document.getElementById('featured-deals');
   const latestSection = document.getElementById('latest-reviews');
@@ -164,29 +184,41 @@ async function loadHomepageContent() {
   const trendingSection = document.getElementById('trending-articles');
   const mostLikedSection = document.getElementById('most-liked-articles');
 
-  if (featuredSection) {
-    const deals = await fetchDeals(3);
-    featuredSection.innerHTML = deals.map(deal => createDealCard(deal)).join('');
-  }
+  const emptyDeals = 'No deals available yet. Check back soon!';
+  const emptyArticles = 'No reviews published yet. Check back soon!';
 
-  if (latestSection) {
-    const articles = await fetchArticles(6);
-    latestSection.innerHTML = articles.map(article => createArticleCard(article)).join('');
-  }
+  try {
+    if (featuredSection) {
+      const deals = await fetchDeals(3);
+      renderSection(featuredSection, deals, createDealCard, emptyDeals);
+    }
 
-  if (statsBar) {
-    const stats = await fetchStats();
-    updateStatsBar(stats);
-  }
+    if (latestSection) {
+      const articles = await fetchArticles(6);
+      renderSection(latestSection, articles, createArticleCard, emptyArticles);
+    }
 
-  if (trendingSection) {
-    const trending = await fetchTrendingArticles(3);
-    trendingSection.innerHTML = trending.map(article => createArticleCard(article)).join('');
-  }
+    if (statsBar) {
+      const stats = await fetchStats();
+      updateStatsBar(stats);
+    }
 
-  if (mostLikedSection) {
-    const mostLiked = await fetchMostLikedArticles(3);
-    mostLikedSection.innerHTML = mostLiked.map(article => createArticleCard(article)).join('');
+    if (trendingSection) {
+      const trending = await fetchTrendingArticles(3);
+      renderSection(trendingSection, trending, createArticleCard, emptyArticles);
+    }
+
+    if (mostLikedSection) {
+      const mostLiked = await fetchMostLikedArticles(3);
+      renderSection(mostLikedSection, mostLiked, createArticleCard, emptyArticles);
+    }
+  } catch (error) {
+    console.error('Error loading homepage content:', error);
+    // Clear any remaining skeletons so the page never stays frozen.
+    renderSection(featuredSection, [], createDealCard, emptyDeals);
+    renderSection(latestSection, [], createArticleCard, emptyArticles);
+    renderSection(trendingSection, [], createArticleCard, emptyArticles);
+    renderSection(mostLikedSection, [], createArticleCard, emptyArticles);
   }
 }
 
