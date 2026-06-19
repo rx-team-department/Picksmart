@@ -1,0 +1,48 @@
+# PickSmart.pk Robots.txt File
+
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow submission page (password protected)
+Disallow: /submit.html
+
+# Disallow 404 page
+Disallow: /404.html
+
+# Disallow admin areas (none in this case)
+# Disallow: /admin/
+
+# Allow crawling of assets
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg
+Allow: *.webp
+
+# Crawl delay for politeness (optional)
+Crawl-delay: 0
+
+# Sitemap location
+Sitemap: https://picksmart.pk/sitemap.xml
+
+# Google-specific directives
+User-agent: Googlebot
+Allow: /
+
+# Bing-specific directives
+User-agent: Bingbot
+Allow: /
+
+# Rules for social media crawlers (allow them)
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /

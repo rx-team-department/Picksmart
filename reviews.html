@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0F2C">
+  
+  <!-- SEO Meta Tags -->
+  <title>Latest Reviews & Articles | PickSmart.pk</title>
+  <meta name="description" content="Read honest product reviews and buying guides for electronics on Daraz.pk. Find the best deals and make smart choices.">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Latest Reviews | PickSmart.pk">
+  <meta property="og:description" content="Honest product reviews and buying guides">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://picksmart.pk/reviews.html">
+  
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Reviews",
+    "url": "https://picksmart.pk/reviews.html"
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="canonical" href="https://picksmart.pk/reviews.html">
+</head>
+<body data-lang="en">
+
+<header>
+  <div class="container">
+    <nav>
+      <h1 class="logo">PickSmart.pk</h1>
+      
+      <div class="hamburger" id="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" data-i18n="navHome">Home</a></li>
+        <li><a href="reviews.html" data-i18n="navReviews">Reviews</a></li>
+        <li><a href="deals.html" data-i18n="navDeals">Deals</a></li>
+        <li><a href="about.html" data-i18n="navAbout">About</a></li>
+        <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+        <li><button class="lang-toggle" id="lang-toggle" data-i18n="navLanguage">EN</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main style="padding-top: 2rem;">
+  <div class="container">
+    <div class="affiliate-banner">
+      <span data-i18n="affiliateNote">PickSmart.pk earns commissions from Daraz affiliate links at no extra cost to you.</span>
+    </div>
+
+    <h1 data-i18n="reviewsTitle">Latest Reviews & Articles</h1>
+
+    <!-- FILTERS & SORT -->
+    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; align-items: center;">
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button class="btn btn-secondary filter-btn active" data-filter="all" data-i18n="filterAll">All</button>
+        <button class="btn btn-secondary filter-btn" data-filter="earphones" data-i18n="filterEarphones">Earphones</button>
+        <button class="btn btn-secondary filter-btn" data-filter="laptops" data-i18n="filterLaptops">Laptops</button>
+        <button class="btn btn-secondary filter-btn" data-filter="mobiles" data-i18n="filterMobiles">Mobiles</button>
+        <button class="btn btn-secondary filter-btn" data-filter="gaming" data-i18n="filterGaming">Gaming</button>
+        <button class="btn btn-secondary filter-btn" data-filter="hometech" data-i18n="filterHometech">Home Tech</button>
+      </div>
+
+      <select id="sort-select" style="padding: 0.6rem; border-radius: 4px; background: rgba(13, 27, 60, 0.5); color: var(--text-light); border: 1px solid var(--border-dark);">
+        <option value="latest" data-i18n="sortLatest">Latest</option>
+        <option value="liked" data-i18n="sortLiked">Most Liked</option>
+        <option value="commented" data-i18n="sortCommented">Most Commented</option>
+      </select>
+    </div>
+
+    <!-- ARTICLES GRID -->
+    <div class="grid-cols-3" id="articles-grid">
+      <div class="card skeleton" style="height: 300px;"></div>
+      <div class="card skeleton" style="height: 300px;"></div>
+      <div class="card skeleton" style="height: 300px;"></div>
+      <div class="card skeleton" style="height: 300px;"></div>
+      <div class="card skeleton" style="height: 300px;"></div>
+      <div class="card skeleton" style="height: 300px;"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html" data-i18n="footerHome">Home</a></li>
+          <li><a href="reviews.html" data-i18n="footerReviews">Reviews</a></li>
+          <li><a href="deals.html" data-i18n="footerDeals">Deals</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a></li>
+          <li><a href="disclosure.html" data-i18n="footerDisclosure">Affiliate Disclosure</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Follow</h3>
+        <div class="social-icons">
+          <a href="https://facebook.com/picksmart" class="social-icon" target="_blank" rel="noopener">f</a>
+          <a href="https://instagram.com/picksmart" class="social-icon" target="_blank" rel="noopener">📸</a>
+          <a href="https://tiktok.com/@picksmart" class="social-icon" target="_blank" rel="noopener">🎵</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p data-i18n="footerCopyright">© 2025 PickSmart.pk — All Rights Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top">↑</button>
+
+<script type="module" src="app.js"></script>
+
+</body>
+</html>

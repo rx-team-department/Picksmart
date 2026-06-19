@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0F2C">
+  
+  <title>Submit Article | PickSmart.pk</title>
+  <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .tab-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--border-dark);
+    }
+    
+    .tab-button {
+      padding: 1rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-gray);
+      cursor: pointer;
+      font-size: 1rem;
+      border-bottom: 3px solid transparent;
+      transition: 0.3s;
+    }
+    
+    .tab-button.active {
+      color: var(--secondary-cyan);
+      border-bottom-color: var(--secondary-cyan);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .deal-fields {
+      display: none;
+      background: rgba(0, 212, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      border-left: 3px solid var(--secondary-cyan);
+    }
+    
+    .deal-fields.show {
+      display: block;
+    }
+    
+    .toggle-switch {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: rgba(13, 27, 60, 0.5);
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+    
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #2d2d2d;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background-color: var(--secondary-cyan);
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    
+    .content-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .content-item {
+      background: rgba(0, 212, 255, 0.1);
+      padding: 1rem;
+      border-radius: 6px;
+      border-left: 3px solid var(--secondary-cyan);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .content-meta {
+      flex: 1;
+    }
+    
+    .content-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .btn-danger {
+      background: #FF4444 !important;
+      color: white !important;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .btn-danger:hover {
+      background: #FF2222 !important;
+    }
+  </style>
+</head>
+<body data-lang="en">
+
+<header>
+  <div class="container">
+    <nav>
+      <h1 class="logo">PickSmart.pk</h1>
+      
+      <div class="hamburger" id="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" data-i18n="navHome">Home</a></li>
+        <li><a href="reviews.html" data-i18n="navReviews">Reviews</a></li>
+        <li><a href="deals.html" data-i18n="navDeals">Deals</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main style="padding: 2rem 0;">
+  <div class="container" style="max-width: 900px;">
+    
+    <!-- PASSWORD PROTECTION FORM -->
+    <div id="password-form">
+      <h1 data-i18n="submitTitle">Submit Article</h1>
+      <p data-i18n="passwordRequired">Password Protected</p>
+
+      <div class="card" style="margin-top: 2rem;">
+        <form onsubmit="handlePasswordSubmit(event)" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div class="form-group">
+            <label data-i18n="enterPassword">Enter Password</label>
+            <input type="password" id="password-input" required>
+          </div>
+          <button type="submit" class="btn btn-primary" data-i18n="unlock">Unlock</button>
+          <div id="password-error" style="display: none; color: #FF6B6B; text-align: center; font-size: 0.9rem;"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB INTERFACE (HIDDEN UNTIL PASSWORD VERIFIED) -->
+    <div id="submission-form" style="display: none;">
+      <h1 data-i18n="submitTitle">Submit Article</h1>
+
+      <!-- TAB BUTTONS -->
+      <div class="tab-buttons">
+        <button class="tab-button active" onclick="switchTab('article')" data-i18n="tabSubmitArticle">Submit Article</button>
+        <button class="tab-button" onclick="switchTab('manage')" data-i18n="tabManageContent">Manage Content</button>
+      </div>
+
+      <!-- TAB 1: ARTICLE SUBMIT FORM -->
+      <div id="article-tab" class="tab-content active">
+        <form id="article-submit-form" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          
+          <div class="form-group">
+            <label data-i18n="formTitle">Article Title</label>
+            <input type="text" id="title" required>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formCategory">Category</label>
+            <select id="category" required>
+              <option value="">Select Category</option>
+              <option value="earphones" data-i18n="filterEarphones">Earphones</option>
+              <option value="laptops" data-i18n="filterLaptops">Laptops</option>
+              <option value="mobiles" data-i18n="filterMobiles">Mobiles</option>
+              <option value="gaming" data-i18n="filterGaming">Gaming</option>
+              <option value="hometech" data-i18n="filterHometech">Home Tech</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formHeroImage">Hero Image (Required)</label>
+            <input type="file" id="hero-image" accept="image/*" required>
+            <small style="color: var(--text-gray); margin-top: 0.5rem; display: block;">Max 5MB. JPG, PNG recommended. Uploaded to Cloudinary.</small>
+            <div id="hero-image-preview" style="margin-top: 1rem;"></div>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formAdditionalImages">Additional Product Images</label>
+            <input type="file" id="additional-images" accept="image/*" multiple>
+            <small style="color: var(--text-gray); margin-top: 0.5rem; display: block;">Optional. Multiple files. Uploaded to Cloudinary.</small>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formVideoUpload">Product Video (Optional)</label>
+            <input type="file" id="video-upload" accept="video/*">
+            <small style="color: var(--text-gray); margin-top: 0.5rem; display: block;">Optional. MP4 recommended. Uploaded to Cloudinary.</small>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formContent">Article Content</label>
+            <textarea id="content" required style="min-height: 300px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formPros">Pros (One per line)</label>
+            <textarea id="pros" style="min-height: 100px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formCons">Cons (One per line)</label>
+            <textarea id="cons" style="min-height: 100px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formDarazLink">Daraz Affiliate Link</label>
+            <input type="url" id="daraz-link" required>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formPrice">Price in PKR</label>
+            <input type="number" id="price" min="0" step="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label data-i18n="formRating">Star Rating (1-5)</label>
+            <select id="rating" required>
+              <option value="">Select Rating</option>
+              <option value="1">1 Star</option>
+              <option value="2">2 Stars</option>
+              <option value="3">3 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="5">5 Stars</option>
+            </select>
+          </div>
+
+          <!-- FEATURE AS DEAL TOGGLE -->
+          <div class="toggle-switch">
+            <label style="margin: 0; color: var(--text-light);">Feature as Deal?</label>
+            <label class="switch">
+              <input type="checkbox" id="feature-as-deal" onchange="toggleDealFields()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- DEAL FIELDS (HIDDEN BY DEFAULT) -->
+          <div id="deal-fields" class="deal-fields">
+            <h3 style="margin-top: 0;">Deal Configuration</h3>
+            
+            <div class="form-group">
+              <label>Original Price (PKR) - Will be crossed out</label>
+              <input type="number" id="original-price" min="0" step="0.01">
+            </div>
+
+            <div class="form-group">
+              <label>Deal Price (PKR) - Discounted price</label>
+              <input type="number" id="deal-price" min="0" step="0.01">
+            </div>
+
+            <div class="form-group">
+              <label>Deal Ends (Date & Time)</label>
+              <input type="datetime-local" id="deal-end-time">
+            </div>
+
+            <div class="form-group">
+              <label>Deal Badge</label>
+              <select id="deal-badge">
+                <option value="Hot Deal">Hot Deal</option>
+                <option value="Best Seller">Best Seller</option>
+                <option value="Top Rated">Top Rated</option>
+                <option value="Budget Pick">Budget Pick</option>
+                <option value="Limited Stock">Limited Stock</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" data-i18n="formSubmit">Publish Article</button>
+          <div id="submit-message" style="display: none; padding: 1rem; border-radius: 4px; text-align: center;"></div>
+        </form>
+      </div>
+
+      <!-- TAB 2: MANAGE CONTENT -->
+      <div id="manage-tab" class="tab-content">
+        <h2>Published Articles</h2>
+        <div id="articles-list" class="content-list" style="margin-bottom: 2rem;">
+          <p style="color: var(--text-gray);">Loading articles...</p>
+        </div>
+
+        <h2>Active Deals</h2>
+        <div id="deals-list" class="content-list">
+          <p style="color: var(--text-gray);">Loading deals...</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom" style="text-align: center; padding: 2rem 0;">
+      <p data-i18n="footerCopyright">© 2025 PickSmart.pk — All Rights Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="app.js"></script>
+<script>
+  function handlePasswordSubmit(event) {
+    event.preventDefault();
+    const password = document.getElementById('password-input').value;
+    const errorDiv = document.getElementById('password-error');
+
+    if (password === 'PickSmart@786') {
+      document.getElementById('password-form').style.display = 'none';
+      document.getElementById('submission-form').style.display = 'block';
+      errorDiv.style.display = 'none';
+      loadManageContent();
+    } else {
+      errorDiv.style.display = 'block';
+      errorDiv.textContent = 'Wrong password. Try again.';
+      document.getElementById('password-input').value = '';
+    }
+  }
+
+  function switchTab(tabName) {
+    // Hide all tabs
+    document.getElementById('article-tab').classList.remove('active');
+    document.getElementById('manage-tab').classList.remove('active');
+    
+    // Remove active class from all buttons
+    document.querySelectorAll('.tab-button').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    
+    // Show selected tab
+    if (tabName === 'article') {
+      document.getElementById('article-tab').classList.add('active');
+      document.querySelectorAll('.tab-button')[0].classList.add('active');
+    } else if (tabName === 'manage') {
+      document.getElementById('manage-tab').classList.add('active');
+      document.querySelectorAll('.tab-button')[1].classList.add('active');
+      loadManageContent();
+    }
+  }
+
+  function toggleDealFields() {
+    const dealFields = document.getElementById('deal-fields');
+    const checkbox = document.getElementById('feature-as-deal');
+    
+    if (checkbox.checked) {
+      dealFields.classList.add('show');
+      document.getElementById('original-price').required = true;
+      document.getElementById('deal-price').required = true;
+      document.getElementById('deal-end-time').required = true;
+    } else {
+      dealFields.classList.remove('show');
+      document.getElementById('original-price').required = false;
+      document.getElementById('deal-price').required = false;
+      document.getElementById('deal-end-time').required = false;
+    }
+  }
+
+  async function loadManageContent() {
+    console.log('Loading manage content...');
+    // This will be called from app.js after Firebase imports
+  }
+</script>
+
+</body>
+</html>

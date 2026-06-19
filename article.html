@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0F2C">
+  
+  <!-- SEO Meta Tags -->
+  <title>Product Review | PickSmart.pk</title>
+  <meta name="description" content="Honest product review and buying guide on PickSmart.pk">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Product Review">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://picksmart.pk/article.html">
+  
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "author": {"@type": "Organization", "name": "PickSmart.pk"},
+    "datePublished": "2025-01-01"
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .article-body { font-size: 1.05rem; line-height: 1.8; }
+    .article-body p { margin-bottom: 1.5rem; }
+    .article-body ul, .article-body ol { margin-bottom: 1.5rem; margin-left: 2rem; }
+    .article-body li { margin-bottom: 0.5rem; }
+    .article-body h2 { margin-top: 2rem; margin-bottom: 1rem; }
+    
+    .reading-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary-cyan), var(--accent-purple));
+      z-index: 1001;
+    }
+    
+    article {
+      max-width: 800px;
+    }
+  </style>
+</head>
+<body data-lang="en">
+
+<div class="reading-progress" id="reading-progress"></div>
+
+<header>
+  <div class="container">
+    <nav>
+      <h1 class="logo">PickSmart.pk</h1>
+      
+      <div class="hamburger" id="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" data-i18n="navHome">Home</a></li>
+        <li><a href="reviews.html" data-i18n="navReviews">Reviews</a></li>
+        <li><a href="deals.html" data-i18n="navDeals">Deals</a></li>
+        <li><a href="about.html" data-i18n="navAbout">About</a></li>
+        <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+        <li><button class="lang-toggle" id="lang-toggle" data-i18n="navLanguage">EN</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main style="padding: 2rem 0;">
+  <div class="container" style="max-width: 900px;">
+    
+    <div id="article-content" style="display: flex; flex-direction: column; gap: 2rem;">
+      <div class="skeleton" style="height: 400px;"></div>
+      <div class="skeleton" style="height: 100px;"></div>
+      <div class="skeleton" style="height: 500px;"></div>
+    </div>
+
+    <!-- RELATED ARTICLES SECTION -->
+    <section style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-dark);">
+      <h3 data-i18n="relatedArticles">Related Articles</h3>
+      <div class="grid-cols-3" style="margin-top: 1.5rem;" id="related-articles">
+        <div class="card skeleton" style="height: 250px;"></div>
+        <div class="card skeleton" style="height: 250px;"></div>
+        <div class="card skeleton" style="height: 250px;"></div>
+      </div>
+    </section>
+
+    <!-- COMMENTS SECTION -->
+    <section style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-dark);">
+      <div id="comments-section"></div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html" data-i18n="footerHome">Home</a></li>
+          <li><a href="reviews.html" data-i18n="footerReviews">Reviews</a></li>
+          <li><a href="deals.html" data-i18n="footerDeals">Deals</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a></li>
+          <li><a href="disclosure.html" data-i18n="footerDisclosure">Affiliate Disclosure</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Follow</h3>
+        <div class="social-icons">
+          <a href="https://facebook.com/picksmart" class="social-icon" target="_blank" rel="noopener">f</a>
+          <a href="https://instagram.com/picksmart" class="social-icon" target="_blank" rel="noopener">📸</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p data-i18n="footerCopyright">© 2025 PickSmart.pk — All Rights Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top">↑</button>
+
+<script type="module" src="app.js"></script>
+<script>
+  // Reading progress indicator
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = scrollTop / docHeight;
+    document.getElementById('reading-progress').style.width = (scrollPercent * 100) + '%';
+  });
+</script>
+
+</body>
+</html>
